@@ -105,7 +105,7 @@ export default async function Home() {
             gap: 9
           }}>
             {COURSES.map(c => (
-              <Link key={c.id} href={`/colleges/${c.id.toLowerCase()}`} style={{
+              <Link key={c.id} href={`/colleges?course=${encodeURIComponent(c.id)}`} style={{
                 background: '#fff', border: '1.5px solid #E2E6F0',
                 borderRadius: 10, padding: '15px 10px',
                 textAlign: 'center', cursor: 'pointer',
@@ -204,7 +204,7 @@ export default async function Home() {
               <h4 style={{ fontFamily: 'var(--font-nunito)', fontSize: 11.5, fontWeight: 800, color: '#fff', marginBottom: 11, textTransform: 'uppercase', letterSpacing: '0.7px' }}>Courses</h4>
               <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 7 }}>
                 {COURSES.slice(0, 6).map(c => (
-                  <li key={c.id}><Link href={`/colleges/${c.id.toLowerCase()}`} style={{ color: 'rgba(255,255,255,0.45)', textDecoration: 'none', fontSize: 12.5 }}>{c.label}</Link></li>
+                  <li key={c.id}><Link href={`/colleges?course=${encodeURIComponent(c.id)}`} style={{ color: 'rgba(255,255,255,0.45)', textDecoration: 'none', fontSize: 12.5 }}>{c.label}</Link></li>
                 ))}
               </ul>
             </div>
