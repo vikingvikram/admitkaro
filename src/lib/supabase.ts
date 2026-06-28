@@ -82,6 +82,7 @@ export async function submitLead(data: {
   course?: string
   budget?: string
   college_interest?: string
+  source?: string
 }) {
   const { error } = await supabase
     .from('leads')

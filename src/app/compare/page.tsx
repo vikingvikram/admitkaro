@@ -85,12 +85,12 @@ const S = {
   removeBtn: { position: 'absolute', top: 8, right: 8, background: '#FEE2E2', border: 'none', borderRadius: '50%', width: 22, height: 22, cursor: 'pointer', color: '#991B1B', fontSize: 13, display: 'flex', alignItems: 'center', justifyContent: 'center' } as React.CSSProperties,
   searchWrap: { position: 'relative', marginBottom: 32 } as React.CSSProperties,
   searchInput: { width: '100%', background: '#fff', border: '1.5px solid #E2E6F0', borderRadius: 10, padding: '12px 16px', fontSize: 15, fontFamily: 'var(--font-nunito-sans)', color: '#1C1F2E', outline: 'none' } as React.CSSProperties,
-  dropdown: { position: 'absolute', top: '100%', left: 0, right: 0, background: '#fff', border: '1px solid #E2E6F0', borderRadius: 10, boxShadow: '0 8px 32px rgba(0,0,0,0.12)', zIndex: 99, maxHeight: 320, overflowY: 'auto' as const, marginTop: 4 },
+  dropdown: { position: 'absolute' as const, top: '100%', left: 0, right: 0, background: '#fff', border: '1px solid #E2E6F0', borderRadius: 10, boxShadow: '0 8px 32px rgba(0,0,0,0.12)', zIndex: 99, maxHeight: 320, overflowY: 'auto' as const, marginTop: 4 },
   dropItem: (hover: boolean): React.CSSProperties => ({ padding: '11px 16px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 10, background: hover ? '#F5F7FA' : '#fff', borderBottom: '1px solid #F1F5F9' }),
   tableWrap: { overflowX: 'auto' as const, borderRadius: 12, boxShadow: '0 1px 4px rgba(0,0,0,.06), 0 4px 16px rgba(0,0,0,.04)' },
   table: { width: '100%', borderCollapse: 'collapse' as const, background: '#fff', minWidth: 600 },
   th: (i: number): React.CSSProperties => ({ background: i === 0 ? '#F8FAFC' : '#1565C0', color: i === 0 ? '#52556A' : '#fff', padding: '14px 16px', fontSize: 12.5, fontWeight: 700, textAlign: 'left' as const, whiteSpace: 'nowrap' as const }),
-  td: (even: boolean, isParam: boolean): React.CSSProperties => ({ padding: '12px 16px', fontSize: 13.5, color: isParam ? '#52556A' : '#1C1F2E', fontWeight: isParam ? 600 : 400, background: even ? '#F8FAFC' : '#fff', borderBottom: '1px solid #F1F5F9', verticalAlign: 'middle' as const, textTransform: isParam ? 'uppercase' as const : 'none' as const, letterSpacing: isParam ? '0.4px' : 'normal', fontSize: isParam ? 11 : 13.5 }),
+  td: (even: boolean, isParam: boolean): React.CSSProperties => ({ padding: '12px 16px', color: isParam ? '#52556A' : '#1C1F2E', fontWeight: isParam ? 600 : 400, background: even ? '#F8FAFC' : '#fff', borderBottom: '1px solid #F1F5F9', verticalAlign: 'middle' as const, textTransform: isParam ? 'uppercase' as const : 'none' as const, letterSpacing: isParam ? '0.4px' : 'normal', fontSize: isParam ? 11 : 13.5 }),
   winner: { color: '#00897B', fontWeight: 800 } as React.CSSProperties,
   winnerBadge: { display: 'inline-block', background: '#E0F2F1', color: '#00574B', fontSize: 9, fontWeight: 800, padding: '1px 6px', borderRadius: 100, marginLeft: 5, verticalAlign: 'middle' } as React.CSSProperties,
   addBtn: { background: '#1565C0', color: '#fff', border: 'none', borderRadius: 8, padding: '10px 20px', fontFamily: 'var(--font-nunito)', fontSize: 13, fontWeight: 700, cursor: 'pointer', width: '100%', marginTop: 8 } as React.CSSProperties,
@@ -210,7 +210,7 @@ export default function ComparePage() {
                   Searching...
                 </div>
               )}
-              {showDropdown && results.length > 0 && (
+              {showDropdown  && results.length > 0 && (
                 <div style={S.dropdown}>
                   {results.map((c, idx) => {
                     const alreadyAdded = !!selected.find(s => s.id === c.id)

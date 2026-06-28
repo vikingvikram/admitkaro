@@ -1,13 +1,13 @@
 'use client'
 
-import { useState } from 'react'
+import { Suspense, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import Navbar from '@/components/Navbar'
 import { COURSES, STATES, BUDGETS } from '@/lib/constants'
 import { submitLead } from '@/lib/supabase'
 
-export default function CounsellingPage() {
+function CounsellingForm() {
   const searchParams = useSearchParams()
   const college = searchParams.get('college') || ''
 
@@ -483,4 +483,11 @@ const inputStyle: React.CSSProperties = {
   fontWeight: 600,
   color: '#1C1F2E',
   outline: 'none',
+}
+export default function CounsellingPage() {
+  return (
+    <Suspense fallback={null}>
+      <CounsellingForm />
+    </Suspense>
+  )
 }
