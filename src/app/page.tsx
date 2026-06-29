@@ -66,7 +66,7 @@ export default async function Home() {
         <div style={{ background: '#fff', borderBottom: '1px solid #E2E6F0' }}>
           <div style={{
             maxWidth: 1320, margin: '0 auto',
-            display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)'
+            display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))'
           }}>
             {[
               { n: '2,800+', l: 'Colleges Listed' },

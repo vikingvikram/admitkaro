@@ -105,7 +105,7 @@ function CounsellingForm() {
             margin: '0 auto',
             padding: '42px 20px 60px',
             display: 'grid',
-            gridTemplateColumns: '1fr 420px',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
             gap: 24,
           }}
         >
