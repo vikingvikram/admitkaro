@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import Navbar from '@/components/Navbar'
 import { getCollegeBySlug } from '@/lib/supabase'
+import './college.css'
 
 type College = {
   id: number
@@ -66,7 +67,7 @@ export default async function CollegeDetailPage({ params }: PageProps) {
     <>
       <Navbar />
 
-      <main style={{ background: '#F5F7FA', minHeight: '100vh' }}>
+      <main className="college-main">
         <section
           style={{
             background:
@@ -75,15 +76,7 @@ export default async function CollegeDetailPage({ params }: PageProps) {
             color: '#fff',
           }}
         >
-          <div
-            style={{
-              maxWidth: 1320,
-              margin: '0 auto',
-              display: 'flex',
-              gap: 18,
-              alignItems: 'flex-end',
-            }}
-          >
+          <div className="college-hero-inner">
             <div
               style={{
                 width: 86,
@@ -173,16 +166,7 @@ export default async function CollegeDetailPage({ params }: PageProps) {
           </div>
         </section>
 
-        <section
-          style={{
-            maxWidth: 1320,
-            margin: '0 auto',
-            padding: '34px 20px 54px',
-            display: 'grid',
-            gridTemplateColumns: '1fr 310px',
-            gap: 20,
-          }}
-        >
+        <section className="college-layout">
           <div>
             <div style={cardStyle} id="overview">
               <h2 style={sectionTitle}>Overview</h2>
@@ -287,16 +271,7 @@ export default async function CollegeDetailPage({ params }: PageProps) {
             </div>
           </div>
 
-          <aside
-            style={{
-              position: 'sticky',
-              top: 78,
-              height: 'fit-content',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: 12,
-            }}
-          >
+          <aside className="college-sidebar">
             <div style={cardStyle}>
               <h3
                 style={{
