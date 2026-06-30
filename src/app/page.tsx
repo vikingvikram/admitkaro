@@ -47,7 +47,6 @@ export default async function Home() {
             Compare 2,800+ colleges on fees, placement & reviews. 100% free for students.
           </p>
 
-          <HomeSearch />
           {/* Quick chips */}
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 7, justifyContent: 'center' }}>
             {['Engineering Colleges Maharashtra', 'MBBS Private Colleges', 'MBA without CAT', 'Low Fee BBA', 'BCA Colleges Bangalore'].map(q => (

@@ -20,7 +20,7 @@ export default function HomeSearch() {
     <div
       style={{
         maxWidth: 760,
-        margin: '0 auto',
+        margin: '0 auto 22px',
         display: 'flex',
         background: '#fff',
         borderRadius: 14,

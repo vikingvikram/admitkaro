@@ -34,6 +34,18 @@
   .college-hero-inner {
     flex-direction: column;
     align-items: flex-start;
+    gap: 14px;
+  }
+
+  .college-hero-inner h1 {
+    font-size: 26px !important;
+    line-height: 1.18 !important;
+    word-break: normal;
+  }
+
+  .college-hero-inner p {
+    font-size: 14px !important;
+    line-height: 1.5 !important;
   }
 
   .college-layout {
@@ -43,6 +55,6 @@
 
   .college-sidebar {
     position: static;
-    order: -1;
+    order: 0;
   }
 }
