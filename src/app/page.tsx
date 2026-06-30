@@ -17,6 +17,7 @@ export default async function Home() {
           padding: '64px 20px 72px', textAlign: 'center',
           position: 'relative', overflow: 'hidden'
         }}>
+          <HomeSearch />
           <div style={{
             display: 'inline-flex', alignItems: 'center', gap: 8,
             background: 'rgba(255,107,53,0.14)',

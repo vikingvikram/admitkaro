@@ -45,19 +45,18 @@ export default async function CollegesPage({ searchParams }: PageProps) {
   const state = params?.state || ''
   const budget = params?.budget || ''
 
+  const isDirectSearch = Boolean(q)
+
   const colleges = (await getColleges({
-    course: course || undefined,
-    state: state || undefined,
+    course: !isDirectSearch && course ? course : undefined,
+    state: !isDirectSearch && state ? state : undefined,
   })) as College[]
 
   const filteredColleges = colleges.filter((college) => {
     const searchText = [
       college.name,
-      college.logo,
       college.slug,
-      college.city,
-      college.state,
-      college.course,
+      college.logo,
     ]
       .filter(Boolean)
       .join(' ')
@@ -70,11 +69,13 @@ export default async function CollegesPage({ searchParams }: PageProps) {
 
     let matchesBudget = true
 
-    if (budget === '100000') matchesBudget = maxFee <= 100000
-    else if (budget === '300000') matchesBudget = minFee >= 100000 && maxFee <= 300000
-    else if (budget === '500000') matchesBudget = minFee >= 300000 && maxFee <= 500000
-    else if (budget === '1000000') matchesBudget = minFee >= 500000 && maxFee <= 1000000
-    else if (budget === '2000000') matchesBudget = minFee >= 1000000
+    if (!isDirectSearch) {
+      if (budget === '100000') matchesBudget = maxFee <= 100000
+      else if (budget === '300000') matchesBudget = minFee >= 100000 && maxFee <= 300000
+      else if (budget === '500000') matchesBudget = minFee >= 300000 && maxFee <= 500000
+      else if (budget === '1000000') matchesBudget = minFee >= 500000 && maxFee <= 1000000
+      else if (budget === '2000000') matchesBudget = minFee >= 1000000
+    }
 
     return matchesSearch && matchesBudget
   })
@@ -101,7 +102,7 @@ export default async function CollegesPage({ searchParams }: PageProps) {
               marginBottom: 10,
             }}
           >
-            Explore Colleges in India
+            {isDirectSearch ? `Search results for "${q}"` : 'Explore Colleges in India'}
           </h1>
 
           <p
@@ -112,7 +113,9 @@ export default async function CollegesPage({ searchParams }: PageProps) {
               margin: '0 auto',
             }}
           >
-            Search and compare colleges by course, state, fees, placements and ratings.
+            {isDirectSearch
+              ? 'Select a college to view fees, placements, admissions and counselling details.'
+              : 'Search and compare colleges by course, state, fees, placements and ratings.'}
           </p>
         </section>
 
@@ -123,66 +126,73 @@ export default async function CollegesPage({ searchParams }: PageProps) {
             padding: '24px 16px 52px',
           }}
         >
-          <form
-            style={{
-              background: '#fff',
-              border: '1px solid #E2E6F0',
-              borderRadius: 14,
-              padding: 14,
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(210px, 1fr))',
-              gap: 10,
-              marginBottom: 24,
-            }}
-          >
-            <input name="q" defaultValue={q} placeholder="Search college name..." style={inputStyle} />
+          {!isDirectSearch && (
+            <form
+              style={{
+                background: '#fff',
+                border: '1px solid #E2E6F0',
+                borderRadius: 14,
+                padding: 14,
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(210px, 1fr))',
+                gap: 10,
+                marginBottom: 24,
+              }}
+            >
+              <input name="q" defaultValue={q} placeholder="Search college name..." style={inputStyle} />
 
-            <select name="course" defaultValue={course} style={inputStyle}>
-              <option value="">All Courses</option>
-              {COURSES.map((c) => (
-                <option key={c.id} value={c.id}>
-                  {c.label}
-                </option>
-              ))}
-            </select>
+              <select name="course" defaultValue={course} style={inputStyle}>
+                <option value="">All Courses</option>
+                {COURSES.map((c) => (
+                  <option key={c.id} value={c.id}>
+                    {c.label}
+                  </option>
+                ))}
+              </select>
 
-            <select name="state" defaultValue={state} style={inputStyle}>
-              <option value="">All States</option>
-              {STATES.map((s) => (
-                <option key={s} value={s}>
-                  {s}
-                </option>
-              ))}
-            </select>
+              <select name="state" defaultValue={state} style={inputStyle}>
+                <option value="">All States</option>
+                {STATES.map((s) => (
+                  <option key={s} value={s}>
+                    {s}
+                  </option>
+                ))}
+              </select>
 
-            <select name="budget" defaultValue={budget} style={inputStyle}>
-              {BUDGETS.map((b) => (
-                <option key={b.value} value={b.value}>
-                  {b.label}
-                </option>
-              ))}
-            </select>
+              <select name="budget" defaultValue={budget} style={inputStyle}>
+                {BUDGETS.map((b) => (
+                  <option key={b.value} value={b.value}>
+                    {b.label}
+                  </option>
+                ))}
+              </select>
 
-            <button type="submit" style={searchButtonStyle}>
-              🔍 Search
-            </button>
-          </form>
+              <button type="submit" style={searchButtonStyle}>
+                🔍 Search
+              </button>
+            </form>
+          )}
 
           <div style={{ marginBottom: 18 }}>
-            <h2 style={sectionTitleStyle}>Recommended Colleges</h2>
+            <h2 style={sectionTitleStyle}>
+              {isDirectSearch ? 'Matching Colleges' : 'Recommended Colleges'}
+            </h2>
+
             <p style={{ fontSize: 13, color: '#52556A' }}>
-              Explore colleges based on your selected course, state and budget.
+              {isDirectSearch
+                ? 'Showing colleges that match your search.'
+                : 'Explore colleges based on course, state and budget.'}
             </p>
 
             {(q || course || state || budget) && (
               <Link href="/colleges" style={clearStyle}>
-                Clear Filters
+                Clear Search
               </Link>
             )}
           </div>
 
           {filteredColleges.length === 0 ? (
-            <div style={emptyStyle}>No colleges found. Try changing filters.</div>
+            <div style={emptyStyle}>No colleges found. Try another search.</div>
           ) : (
             <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
               {filteredColleges.map((college) => (
