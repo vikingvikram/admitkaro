@@ -2,99 +2,65 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { COURSES, STATES, BUDGETS } from '@/lib/constants'
 
 export default function HomeSearch() {
   const router = useRouter()
-
-  const [course, setCourse] = useState('')
-  const [state, setState] = useState('')
-  const [budget, setBudget] = useState('')
+  const [query, setQuery] = useState('')
 
   function handleSearch() {
-    const params = new URLSearchParams()
+    if (!query.trim()) {
+      router.push('/colleges')
+      return
+    }
 
-    if (course) params.set('course', course)
-    if (state) params.set('state', state)
-    if (budget) params.set('budget', budget)
-
-    const queryString = params.toString()
-
-    router.push(queryString ? `/colleges?${queryString}` : '/colleges')
+    router.push(`/colleges?q=${encodeURIComponent(query)}`)
   }
 
   return (
     <div
       style={{
-        maxWidth: 820,
-        margin: '0 auto 20px',
-        background: 'rgba(255,255,255,0.08)',
-        border: '1px solid rgba(255,255,255,0.14)',
-        borderRadius: 14,
-        padding: 7,
+        maxWidth: 760,
+        margin: '0 auto',
         display: 'flex',
-        flexWrap: 'wrap',
-        gap: 7,
+        background: '#fff',
+        borderRadius: 14,
+        overflow: 'hidden',
+        boxShadow: '0 12px 35px rgba(0,0,0,.15)',
       }}
     >
-      <select value={course} onChange={(e) => setCourse(e.target.value)} style={selectStyle}>
-        <option value="">🎓 Select Stream</option>
-        {COURSES.map((c) => (
-          <option key={c.id} value={c.id}>
-            {c.icon} {c.label}
-          </option>
-        ))}
-      </select>
-
-      <select value={state} onChange={(e) => setState(e.target.value)} style={selectStyle}>
-        <option value="">📍 Select State</option>
-        {STATES.map((s) => (
-          <option key={s} value={s}>
-            {s}
-          </option>
-        ))}
-      </select>
-
-      <select value={budget} onChange={(e) => setBudget(e.target.value)} style={selectStyle}>
-        {BUDGETS.map((b) => (
-          <option key={b.value} value={b.value}>
-            {b.label}
-          </option>
-        ))}
-      </select>
-
-      <button
-        type="button"
-        onClick={handleSearch}
+      <input
+        type="text"
+        placeholder="Search colleges, courses or exams..."
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') handleSearch()
+        }}
         style={{
           flex: 1,
-          minWidth: 160,
+          border: 'none',
+          outline: 'none',
+          padding: '18px 20px',
+          fontSize: 16,
+          fontWeight: 600,
+          color: '#1f2937',
+        }}
+      />
+
+      <button
+        onClick={handleSearch}
+        style={{
           background: '#FF6B35',
           color: '#fff',
           border: 'none',
-          borderRadius: 9,
-          padding: '12px 26px',
-          fontSize: 14,
-          fontFamily: 'var(--font-nunito)',
-          fontWeight: 800,
+          padding: '0 34px',
           cursor: 'pointer',
+          fontWeight: 800,
+          fontSize: 15,
         }}
       >
-        🔍 Search Colleges
+        🔍 Search
       </button>
     </div>
   )
-}
-
-const selectStyle: React.CSSProperties = {
-  flex: 1,
-  minWidth: 160,
-  background: '#fff',
-  border: 'none',
-  borderRadius: 9,
-  padding: '12px 14px',
-  fontSize: 14,
-  fontWeight: 600,
-  color: '#1C1F2E',
-  outline: 'none',
 }
